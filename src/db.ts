@@ -4,6 +4,7 @@ interface Group {
   id: number
   name: string
   description: string
+  created: Date
   /** List of names of members of group */
   members: string[]
   items: Item[]

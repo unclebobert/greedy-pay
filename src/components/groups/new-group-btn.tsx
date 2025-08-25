@@ -55,6 +55,7 @@ export function NewGroupButton() {
             db.groups.add({
               name,
               description: desc || '',
+              created: new Date(),
               members: [],
               items: []
             })
