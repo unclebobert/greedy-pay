@@ -24,8 +24,8 @@ export function EditGroupButton({ group }: { group: Group }) {
       <DialogTrigger asChild>
         <Edit className='hover:text-muted-foreground cursor-pointer my-1' />
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[425px]'>
-        <DialogHeader>
+      <DialogContent className='sm:max-w-[600px]'>
+        <DialogHeader className='min-w-0 overflow-clip'>
           <DialogTitle>Edit <em>{group.name}</em></DialogTitle>
         </DialogHeader>
         <div className='grid gap-4'>
@@ -33,6 +33,7 @@ export function EditGroupButton({ group }: { group: Group }) {
             <Label htmlFor='group-name'>Name</Label>
             <Input id='group-name' name='name'
               value={name} onChange={e => setName(e.target.value)}
+              maxLength={20}
             />
           </div>
           <div className='grid gap-3'>
@@ -47,14 +48,16 @@ export function EditGroupButton({ group }: { group: Group }) {
           <DialogClose asChild>
             <Button variant='outline'>Cancel</Button>
           </DialogClose>
-          <Button variant='success' onClick={_ => {
-            if (!name) {
-              toast.error('Group name cannot be empty')
-              return
-            }
-            db.groups.update(group.id, { name, description: desc })
-            toast.success('Group successfully edited')
-          }}>Save Changes</Button>
+          <DialogClose asChild>
+            <Button variant='success' onClick={_ => {
+              if (!name) {
+                toast.error('Group name cannot be empty')
+                return
+              }
+              db.groups.update(group.id, { name, description: desc })
+              toast.success('Group successfully edited')
+            }}>Save Changes</Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

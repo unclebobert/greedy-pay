@@ -19,8 +19,8 @@ export function DeleteGroupButton({ group }: { group: Group }) {
       <DialogTrigger asChild>
         <Trash className='hover:text-muted-foreground cursor-pointer my-[0.2rem]' />
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[425px]'>
-        <DialogHeader>
+      <DialogContent className='sm:max-w-[600px]'>
+        <DialogHeader className='min-w-0 overflow-clip'>
           <DialogTitle>Delete <em>{group.name}</em>?</DialogTitle>
         </DialogHeader>
         <DialogDescription>

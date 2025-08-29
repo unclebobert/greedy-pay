@@ -24,7 +24,7 @@ export function NewGroupButton() {
       <DialogTrigger asChild>
         <Plus className='hover:text-muted-foreground cursor-pointer my-1' />
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[425px]'>
+      <DialogContent className='sm:max-w-[600px]'>
         <DialogHeader>
           <DialogTitle>Create New Group</DialogTitle>
         </DialogHeader>
@@ -33,6 +33,7 @@ export function NewGroupButton() {
             <Label htmlFor='group-name'>Name</Label>
             <Input id='group-name' name='name' defaultValue='New Group'
               value={name} onChange={e => setName(e.target.value)}
+              maxLength={20}
             />
           </div>
           <div className='grid gap-3'>
