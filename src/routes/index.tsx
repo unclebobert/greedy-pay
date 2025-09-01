@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { NewGroupButton } from '@/components/groups/new-group-btn'
+import { NewGroupButton } from '@/components/groups/list/new-group-btn'
 
 export const Route = createFileRoute('/')({
   component: Index,

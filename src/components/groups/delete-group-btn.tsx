@@ -1,4 +1,4 @@
-import { Trash } from 'lucide-react'
+import { Trash2 } from 'lucide-react'
 import {
   Dialog,
   DialogTrigger,
@@ -21,10 +21,10 @@ export function DeleteGroupButton({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Trash className={cn(className, 'hover:text-muted-foreground cursor-pointer my-[0.31rem]')} />
+        <Trash2 className={cn(className, 'hover:text-muted-foreground cursor-pointer my-1 -translate-y-[0.05rem]')} />
       </DialogTrigger>
       <DialogContent className='sm:max-w-[600px]'>
-        <DialogHeader className='min-w-0 overflow-clip'>
+        <DialogHeader className='min-w-0 overflow-x-clip'>
           <DialogTitle>Delete <em>{group.name}</em>?</DialogTitle>
         </DialogHeader>
         <DialogDescription>

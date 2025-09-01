@@ -1,4 +1,4 @@
-import { Edit } from 'lucide-react'
+import { User } from 'lucide-react'
 import {
   Dialog,
   DialogTrigger,
@@ -26,10 +26,10 @@ export function EditGroupButton({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Edit className={cn(className, 'hover:text-muted-foreground cursor-pointer my-1')} />
+        <User className={cn(className, 'hover:text-muted-foreground cursor-pointer')} />
       </DialogTrigger>
       <DialogContent className='sm:max-w-[600px]'>
-        <DialogHeader className='min-w-0 overflow-x-clip'>
+        <DialogHeader className='min-w-0 overflow-clip'>
           <DialogTitle>Edit <em>{group.name}</em></DialogTitle>
         </DialogHeader>
         <div className='grid gap-4'>

@@ -3,10 +3,11 @@ import { AppLogo } from './ui/app-logo';
 import { ThemeButton } from './theme-button';
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate, useParams } from '@tanstack/react-router';
-import { NewGroupButton } from './groups/new-group-btn';
-import { GroupList } from './groups/group-list';
+import { NewGroupButton } from '@/components/groups/list/new-group-btn';
+import { GroupList } from '@/components/groups/list/group-list';
 import { useLiveQuery } from 'dexie-react-hooks';
 import db from '@/db';
+import { ImportGroupButton } from './groups/list/import-group-btn';
 
 export function AppSidebar() {
   const nav = useNavigate()
@@ -28,7 +29,10 @@ export function AppSidebar() {
             <h1 className='text-3xl font-semibold ml-2'>
               Groups
             </h1>
-            <NewGroupButton className='size-8 ml-4' />
+            <div className='flex items-center gap-2 ml-6'>
+              <NewGroupButton className='size-8' />
+              <ImportGroupButton className='size-6' />
+            </div>
           </div>
           <GroupList groups={groups} selected={parseInt(groupId || '-1')} />
         </div>
