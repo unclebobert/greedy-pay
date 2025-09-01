@@ -9,7 +9,6 @@ import {
   DialogClose
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import type { Group } from '@/db'
 import { DialogDescription } from '@radix-ui/react-dialog'
 import { cn } from '@/lib/utils'
 import { Input } from '@/components/ui/input'
