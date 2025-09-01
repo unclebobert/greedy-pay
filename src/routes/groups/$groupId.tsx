@@ -14,7 +14,7 @@ import { EditGroupButton } from '@/components/group/edit-group-btn'
 import { LoaderCircle } from 'lucide-react'
 import { DeleteGroupButton } from '@/components/group/delete-group-btn'
 
-export const Route = createFileRoute('/group/$groupId')({
+export const Route = createFileRoute('/groups/$groupId')({
   component: Group,
 })
 
