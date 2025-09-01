@@ -1,9 +1,7 @@
-"use client"
-
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-import { PanelLeftIcon } from "lucide-react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
@@ -207,7 +205,7 @@ function Sidebar({
 
   return (
     <div
-      className="group peer text-sidebar-foreground hidden md:block"
+      className="group peer text-sidebar-foreground bg-sidebar hidden md:block"
       data-state={state}
       data-collapsible={state === "collapsed" ? collapsible : ""}
       data-variant={variant}
@@ -258,22 +256,24 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar } = useSidebar()
+  const { toggleSidebar, open, isMobile, openMobile } = useSidebar()
 
   return (
     <Button
       data-sidebar="trigger"
       data-slot="sidebar-trigger"
-      variant="ghost"
       size="icon"
-      className={cn("size-7", className)}
+      className={cn("bg-sidebar-accent text-sidebar-foreground hover:bg-sidebar", className)}
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()
       }}
       {...props}
     >
-      <PanelLeftIcon />
+      {(isMobile && openMobile) || (!isMobile && open) ?
+        <ChevronLeft className='size-6' />:
+        <ChevronRight className='size-6' />
+      }
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )

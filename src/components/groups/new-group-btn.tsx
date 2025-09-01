@@ -15,14 +15,15 @@ import { Textarea } from '../ui/textarea'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import db from '@/db'
+import { cn } from '@/lib/utils'
 
-export function NewGroupButton() {
+export function NewGroupButton({ className }: React.ComponentProps<'svg'>) {
   const [name, setName] = useState('New Group')
   const [desc, setDesc] = useState('')
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Plus className='hover:text-muted-foreground cursor-pointer my-1' />
+        <Plus className={cn(className, 'hover:text-muted-foreground cursor-pointer my-1')} />
       </DialogTrigger>
       <DialogContent className='sm:max-w-[600px]'>
         <DialogHeader>

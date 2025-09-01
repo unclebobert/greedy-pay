@@ -12,12 +12,16 @@ import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import db, { type Group } from '@/db'
 import { DialogDescription } from '@radix-ui/react-dialog'
+import { cn } from '@/lib/utils'
 
-export function DeleteGroupButton({ group }: { group: Group }) {
+export function DeleteGroupButton({
+  group,
+  className
+}: React.ComponentProps<'svg'> & { group: Group }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Trash className='hover:text-muted-foreground cursor-pointer my-[0.2rem]' />
+        <Trash className={cn(className, 'hover:text-muted-foreground cursor-pointer my-[0.31rem]')} />
       </DialogTrigger>
       <DialogContent className='sm:max-w-[600px]'>
         <DialogHeader className='min-w-0 overflow-clip'>

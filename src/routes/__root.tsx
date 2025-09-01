@@ -1,5 +1,5 @@
-import { AppSidebar } from '@/components/app-sidebar'
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import { AppSidebar, AppSidebarOpen } from '@/components/app-sidebar'
+import { SidebarProvider } from '@/components/ui/sidebar'
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createRootRoute({
@@ -7,7 +7,7 @@ export const Route = createRootRoute({
     <div className='h-screen'>
       <SidebarProvider>
         <AppSidebar />
-        <SidebarTrigger />
+        <AppSidebarOpen />
         <Outlet />
       </SidebarProvider>
     </div>

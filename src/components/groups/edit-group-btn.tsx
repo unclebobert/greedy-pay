@@ -15,14 +15,18 @@ import { Textarea } from '../ui/textarea'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import db, { type Group } from '@/db'
+import { cn } from '@/lib/utils'
 
-export function EditGroupButton({ group }: { group: Group }) {
+export function EditGroupButton({
+  group,
+  className
+}: React.ComponentProps<'svg'> & { group: Group }) {
   const [name, setName] = useState(group.name)
   const [desc, setDesc] = useState(group.description)
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Edit className='hover:text-muted-foreground cursor-pointer my-1' />
+        <Edit className={cn(className, 'hover:text-muted-foreground cursor-pointer my-1')} />
       </DialogTrigger>
       <DialogContent className='sm:max-w-[600px]'>
         <DialogHeader className='min-w-0 overflow-clip'>
