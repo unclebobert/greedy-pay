@@ -15,25 +15,20 @@ export function AppSidebar() {
   const { groupId } = useParams({ strict: false })
   return (
     <Sidebar>
-      <SidebarHeader className='pt-2'>
-        <ArrowLeft className='cursor-pointer hover:text-muted-foreground'
-          onClick={() => {
-            nav({ from: window.location.pathname as any, to: '..' })
-          }}
-        />
+      <SidebarHeader className='pt-4'>
+        <div className='flex'>
+          <h1 className='text-3xl font-semibold ml-2'>
+            Groups
+          </h1>
+          <div className='flex items-center gap-2 ml-auto mr-2'>
+            <NewGroupButton className='size-8' />
+            <ImportGroupButton className='size-6' />
+          </div>
+        </div>
       </SidebarHeader>
       <hr />
       <SidebarContent>
         <div className='mx-2'>
-          <div className='flex mt-4'>
-            <h1 className='text-3xl font-semibold ml-2'>
-              Groups
-            </h1>
-            <div className='flex items-center gap-2 ml-6'>
-              <NewGroupButton className='size-8' />
-              <ImportGroupButton className='size-6' />
-            </div>
-          </div>
           <GroupList groups={groups} selected={parseInt(groupId || '-1')} />
         </div>
       </SidebarContent>
