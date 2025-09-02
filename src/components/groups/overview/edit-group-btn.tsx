@@ -1,4 +1,4 @@
-import { User } from 'lucide-react'
+import { Edit } from 'lucide-react'
 import {
   Dialog,
   DialogTrigger,
@@ -11,7 +11,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Textarea } from '../ui/textarea'
+import { Textarea } from '@/components/ui/textarea'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import db, { type Group } from '@/db'
@@ -26,10 +26,10 @@ export function EditGroupButton({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <User className={cn(className, 'hover:text-muted-foreground cursor-pointer')} />
+        <Edit className={cn(className, 'hover:text-muted-foreground cursor-pointer my-1')} />
       </DialogTrigger>
       <DialogContent className='sm:max-w-[600px]'>
-        <DialogHeader className='min-w-0 overflow-clip'>
+        <DialogHeader className='min-w-0 overflow-x-clip'>
           <DialogTitle>Edit <em>{group.name}</em></DialogTitle>
         </DialogHeader>
         <div className='grid gap-4'>

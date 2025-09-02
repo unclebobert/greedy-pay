@@ -18,7 +18,7 @@ interface Group {
 interface Item {
   name: string
   description: string
-  /** Who is owed money: how much they owe */
+  /** Who is owed money: how much they are owed */
   owees: Record<string, number>
   /** Who owes money: how much they owe */
   owers: Record<string, number>
