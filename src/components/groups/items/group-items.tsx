@@ -1,23 +1,16 @@
-import { AddMemberButton } from '../members/add-member-btn';
+import { AddItemButton } from './add-item-btn';
 
 import type { Group } from '@/db';
-import { groupBalances } from '@/lib/utils';
+import { ItemsTable } from './items-table';
 
-export function GroupMembers({ group }: { group: Group }) {
-  const balances = groupBalances(group)
+export function GroupItems({ group }: { group: Group }) {
   return (
     <>
       <div className='flex mb-2 gap-2 items-end'>
-        <h2 className='text-2xl font-semibold'>Members</h2>
-        <AddMemberButton group={group} className='size-6 ml-4' />
+        <h2 className='text-2xl font-semibold'>Items</h2>
+        <AddItemButton group={group} className='size-6 ml-4' />
       </div>
-      <ul>
-        {Object.entries(balances).map(([member, balance]) => (
-          <li key={member + group.id}>
-            {member}: {balance}
-          </li>
-        ))}
-      </ul>
+      <ItemsTable group={group} />
     </>
   )
 }
