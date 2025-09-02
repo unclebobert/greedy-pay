@@ -1,10 +1,10 @@
 import { AddMemberButton } from './add-member-btn';
 
 import type { Group } from '@/db';
-import { groupBalances } from '@/lib/utils';
+import { bobertsAmazingGreedyPayAlgorithm, formatPayments } from '@/lib/utils';
 
 export function GroupMembers({ group }: { group: Group }) {
-  const balances = groupBalances(group)
+  const transactions = bobertsAmazingGreedyPayAlgorithm(group)
   return (
     <>
       <div className='flex mb-2 gap-2 items-end'>
@@ -12,9 +12,9 @@ export function GroupMembers({ group }: { group: Group }) {
         <AddMemberButton group={group} className='size-6 ml-4' />
       </div>
       <ul>
-        {Object.entries(balances).map(([member, balance]) => (
+        {Object.entries(transactions).map(([member, payees]) => (
           <li key={member + group.id}>
-            {member}: {balance}
+            {member}: {formatPayments(payees)}
           </li>
         ))}
       </ul>
