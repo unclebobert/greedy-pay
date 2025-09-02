@@ -24,7 +24,15 @@ export function AddItemButton({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Plus className={cn(className, 'hover:text-muted-foreground cursor-pointer my-1')} />
+        <Plus className={cn(className, 'hover:text-muted-foreground cursor-pointer my-1')}
+          onClick={e => {
+            if (group.members.length === 0) {
+              toast.error('Cannot create an item when there are no members in the group')
+              e.stopPropagation()
+              e.preventDefault()
+            }
+          }}
+        />
       </DialogTrigger>
       <DialogContent className='sm:max-w-[600px]'>
         <DialogHeader>

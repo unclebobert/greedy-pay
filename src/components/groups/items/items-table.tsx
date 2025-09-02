@@ -106,7 +106,10 @@ export function ItemsTable({ group }: { group: Group }) {
                       <TableCell key={`_${member}_total`}
                         className={cn(colour, 'border-l')}
                       >
-                        {balance < 0 ? `-$${-balance}` : `$${balance}`}
+                        {balance < 0 ?
+                          `-$${-balance.toFixed(2)}` :
+                          `$${balance.toFixed(2)}`
+                        }
                       </TableCell>
                     )
                   })

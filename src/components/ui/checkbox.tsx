@@ -1,21 +1,33 @@
-import { CheckIcon } from 'lucide-react';
+import * as React from "react"
+import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
+import { CheckIcon } from "lucide-react"
 
-export function Checkbox({ onClick, selected }: {
-  onClick: () => void,
-  selected: boolean
-}) {
+import { cn } from "@/lib/utils"
+
+function Checkbox({
+  className,
+  ...props
+}: React.ComponentProps<typeof CheckboxPrimitive.Root>) {
   return (
-    <div
-      onClick={onClick}
-      className={`
-        border-input size-5 rounded-sm border transition-colors cursor-pointer
-        ${selected ?
-          'bg-primary text-primary-foreground border-primary hover:bg-primary/80 hover:border-transparent' :
-          'hover:bg-primary/5'
-        }
-      `}
+    <CheckboxPrimitive.Root
+      data-slot="checkbox"
+      className={cn(
+        "peer border-input dark:bg-input/30 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground dark:data-[state=checked]:bg-primary data-[state=checked]:border-primary focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+        "outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",
+        "cursor-pointer transition-colors size-5 shrink-0 rounded-sm border shadow-xs",
+        "hover:bg-primary/10 hover:border-transparent data-[state=checked]:hover:bg-primary/85 dark:data-[state=checked]:hover:bg-primary/85",
+        className
+      )}
+      {...props}
     >
-      {selected && <CheckIcon className="size-4.5 mt-[1px]" />}
-    </div>
+      <CheckboxPrimitive.Indicator
+        data-slot="checkbox-indicator"
+        className="flex items-center justify-center text-current transition-none"
+      >
+        <CheckIcon className="size-4.5 mt-[1px]" />
+      </CheckboxPrimitive.Indicator>
+    </CheckboxPrimitive.Root>
   )
 }
+
+export { Checkbox }

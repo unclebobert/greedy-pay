@@ -16,6 +16,7 @@ import { toast } from 'sonner'
 import db, { type Group, type Item } from '@/db'
 import { cn } from '@/lib/utils'
 import { OweesList } from './owees-list'
+import { OwersList } from './owers-list'
 
 export function EditItemButton({
   className,
@@ -40,20 +41,20 @@ export function EditItemButton({
         </DialogHeader>
         <div className='grid gap-4'>
           <div className='grid gap-2'>
-            <Label htmlFor='item-name'>Name</Label>
+            <Label className='font-semibold' htmlFor='item-name'>Name</Label>
             <Input id='item-name' name='name' value={name}
               onChange={e => setName(e.target.value)}
             />
           </div>
+          <hr />
           <div className='grid gap-2'>
-            <Label htmlFor='creditors'>Creditors</Label>
+            <Label className='font-semibold'>Creditors</Label>
             <OweesList group={group} owees={owees} setOwees={setOwees} />
           </div>
+          <hr />
           <div className='grid gap-2'>
-            <Label htmlFor='creditors'>Debtors</Label>
-            <Input id='creditors' name='name' defaultValue='New Item'
-              value={name} onChange={e => setName(e.target.value)}
-            />
+            <Label className='font-semibold'>Debtors</Label>
+            <OwersList group={group} owees={owees} owers={owers} setOwers={setOwers} />
           </div>
         </div>
         <DialogFooter>
@@ -62,7 +63,7 @@ export function EditItemButton({
           </DialogClose>
           <Button variant='success' onClick={_ => {
             if (!name) {
-              toast.error('Please give the item a name')
+              toast.error('The item must have a name')
               return
             }
             if (name !== item.name && group.items.some(item => item.name === name)) {
@@ -74,10 +75,13 @@ export function EditItemButton({
             const parsedOwees = Object.fromEntries(
               Object.entries(owees).filter(([_, amount]) => amount > 0)
             )
+            const parsedOwers = Object.fromEntries(
+              Object.entries(owers).filter(([_, amount]) => amount > 0)
+            )
             db.groups.update(group.id, {
               items: [
                 ...group.items.filter(i => i.name !== item.name),
-                { name, owees: parsedOwees, owers }
+                { name, owees: parsedOwees, owers: parsedOwers }
               ]
             })
             toast.success(`Successfully saved all changes`)

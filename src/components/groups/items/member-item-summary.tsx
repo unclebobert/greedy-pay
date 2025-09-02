@@ -19,11 +19,11 @@ export function MemberItemSummary({ isOwed, owes }: {
       </div>
       <div className='grow'>
         <div className={cn(owedColour, 'pt-1 pb-0.5 px-2')}>
-          ${isOwed ?? 0}
+          ${isOwed ? isOwed.toFixed(2) : 0}
         </div>
         <hr />
         <div className={cn(owesColour, 'pb-1 pt-0.5 px-2')}>
-          ${owes ?? 0}
+          ${owes ? owes.toFixed(2) : 0}
         </div>
       </div>
     </div>
