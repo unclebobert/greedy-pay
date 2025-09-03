@@ -46,9 +46,9 @@ export function bobertsAmazingGreedyPayAlgorithm(group: Group) {
       const payee = Object.entries(balances)
         .find(([_member, balance]) => balance > 0)
       if (!payee) {
-        toast.warning(`
+        toast.error(`
           Could not find someone for ${member} to pay, even though
-          ${member} is still owing ${-balances[member]}.
+          ${member} is still owing ${formatCurrency(-balances[member])}.
           This could be due to floating-point error.
         `)
         break
@@ -78,9 +78,9 @@ export function bobertsAmazingGreedyPayAlgorithm(group: Group) {
   }
   for (const [member, amount] of Object.entries(balances)) {
     if (amount !== 0) {
-      toast.warning(`
-        After calculating transactions, ${member} still has a balance of ${amount}.
-        This could be due to floating-point error.
+      toast.error(`
+        After calculating transactions,
+        ${member} still has a balance of ${formatCurrency(amount)}.
       `)
     }
   }
@@ -98,8 +98,17 @@ export function formatPayments(payments: { [payee: string] : number }) {
   return (
     'needs to pay ' +
     paymentsList
-      .map(([payee, amount]) => `$${amount.toFixed(2)} to ${payee}`)
+      .map(([payee, amount]) => `${formatCurrency(amount)} to ${payee}`)
       .join(' and ') +
     '.'
   )
+}
+
+/**
+ * Formats a number to a string representation of how much it is
+ * @param amount the amount in cents
+ */
+export function formatCurrency(amount: number) {
+  const dollars = amount / 100
+  return dollars < 0 ? `-$${-dollars.toFixed(2)}` : `$${dollars.toFixed(2)}`
 }

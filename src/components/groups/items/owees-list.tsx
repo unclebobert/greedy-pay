@@ -40,11 +40,14 @@ export function OweesList({ group, owees, setOwees }: {
               <TableCell>
                 <div className='flex gap-2 items-center'>
                   <span>is owed</span>
-                  <Input type='number' min={0} value={amount}
-                    onChange={e => setOwees({
-                      ...owees,
-                      [name]: parseFloat(e.target.value)
-                    })}
+                  <Input type='number' min={0} step={0.01} value={amount / 100}
+                    onChange={e => {
+                      setOwees({
+                        ...owees,
+                        // Multiple and round as amount needs to be stored in cents
+                        [name]: Math.round(parseFloat(e.target.value) * 100)
+                      })
+                    }}
                   />
                 </div>
               </TableCell>
@@ -54,7 +57,7 @@ export function OweesList({ group, owees, setOwees }: {
         <TableRow key='addowee'>
           <TableCell colSpan={2}>
             <Select value={newOwee}
-              onValueChange={Owee => addNewOwee(Owee)}
+              onValueChange={owee => addNewOwee(owee)}
             >
               <SelectTrigger className="w-[180px] cursor-pointer">
                 <SelectValue placeholder='Add new creditor' />

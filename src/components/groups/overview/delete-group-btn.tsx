@@ -13,11 +13,13 @@ import { toast } from 'sonner'
 import db, { type Group } from '@/db'
 import { DialogDescription } from '@radix-ui/react-dialog'
 import { cn } from '@/lib/utils'
+import { useNavigate } from '@tanstack/react-router'
 
 export function DeleteGroupButton({
   group,
   className
 }: React.ComponentProps<'svg'> & { group: Group }) {
+  const nav = useNavigate()
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -38,6 +40,7 @@ export function DeleteGroupButton({
             <Button variant='destructive' onClick={_ => {
               db.groups.delete(group.id)
               toast.success('Group successfully deleted')
+              nav({ to: '/' })
             }}>Confirm</Button>
           </DialogClose>
         </DialogFooter>

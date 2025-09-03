@@ -16,7 +16,7 @@ import {
 
 import type { Group, Item } from '@/db'
 import { MemberItemSummary } from './member-item-summary'
-import { cn, groupBalances } from '@/lib/utils'
+import { cn, formatCurrency, groupBalances } from '@/lib/utils'
 import { EditItemButton } from './edit-item-btn'
 
 export function ItemsTable({ group }: { group: Group }) {
@@ -106,10 +106,7 @@ export function ItemsTable({ group }: { group: Group }) {
                       <TableCell key={`_${member}_total`}
                         className={cn(colour, 'border-l')}
                       >
-                        {balance < 0 ?
-                          `-$${-balance.toFixed(2)}` :
-                          `$${balance.toFixed(2)}`
-                        }
+                        {formatCurrency(balance)}
                       </TableCell>
                     )
                   })

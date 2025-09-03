@@ -59,7 +59,8 @@ export function NewGroupButton({ className }: React.ComponentProps<'svg'>) {
               description: desc || '',
               created: new Date(),
               members: [],
-              items: []
+              items: [],
+              remainders: {}
             })
           }}>Create</Button>
         </DialogFooter>
