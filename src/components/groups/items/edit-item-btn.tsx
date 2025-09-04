@@ -26,8 +26,6 @@ export function EditItemButton({
   const [name, setName] = useState(item.name)
   const [owees, setOwees] = useState(item.owees)
   const [owers, setOwers] = useState(item.owers)
-  const [splitting, setSplitting] = useState(item.splitting)
-  const [allRemainders, setAllRemainders] = useState(group.remainders)
 
   return (
     <Dialog>
@@ -57,17 +55,7 @@ export function EditItemButton({
           <div className='grid gap-2'>
             <Label className='font-semibold'>Debtors</Label>
             <OwersList group={group} item={item}
-              owees={owees} owers={owers} setOwers={setOwers}
-              setRemainders={itemRemainders => {
-                setAllRemainders(Object.fromEntries(
-                  Object.entries(allRemainders)
-                    .map(([iName, iRemainders]) => {
-                      if (iName === item.name) return [iName, itemRemainders]
-                      return [iName, iRemainders]
-                    })
-                ))
-              }}
-              // splitting={splitting} setSplitting={setSplitting}
+              owers={owers} setOwers={setOwers}
             />
           </div>
         </div>
@@ -89,15 +77,13 @@ export function EditItemButton({
             const parsedOwees = Object.fromEntries(
               Object.entries(owees).filter(([_, amount]) => amount > 0)
             )
-            const parsedOwers = Object.fromEntries(
-              Object.entries(owers).filter(([_, amount]) => amount > 0)
-            )
             db.groups.update(group.id, {
               items: [
-                ...group.items.filter(i => i.name !== item.name),
-                { name, owees: parsedOwees, owers: parsedOwers, splitting }
+                ...group.items.map(i => {
+                  if (i.name !== item.name) return i
+                  return { name, owees: parsedOwees, owers }
+                }),
               ],
-              remainders: allRemainders
             })
             toast.success(`Successfully saved all changes`)
           }}>Save Changes</Button>

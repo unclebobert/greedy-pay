@@ -1,10 +1,10 @@
 import { AddMemberButton } from './add-member-btn';
 
 import type { Group } from '@/db';
-import { bobertsAmazingGreedyPayAlgorithm, formatPayments } from '@/lib/utils';
+import { formatPayments } from '@/lib/utils';
 
 export function GroupMembers({ group }: { group: Group }) {
-  const transactions = bobertsAmazingGreedyPayAlgorithm(group)
+  const transactions = group.minimisedTransactions()
   return (
     <>
       <div className='flex mb-2 gap-2 items-end'>

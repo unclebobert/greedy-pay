@@ -57,12 +57,9 @@ export function AddItemButton({
               toast.error('The group already contains an item with the same name')
               return
             }
-            const remainders = group.remainders
-            remainders[name] = {}
-            db.groups.update(group.id, {
-              items: [...group.items, { name, owees: {}, owers: {}, splitting: 'equal' }],
-              remainders
-            })
+            // By default, the new item will split equally
+            const newItems = [...group.items, { name, owees: {} }]
+            db.groups.update(group.id, { items: newItems })
             toast.success(`Successfully added item '${name}'`)
           }}>Add</Button>
         </DialogFooter>

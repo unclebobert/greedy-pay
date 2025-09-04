@@ -16,39 +16,56 @@ import {
 
 import type { Group, Item } from '@/db'
 import { MemberItemSummary } from './member-item-summary'
-import { cn, formatCurrency, groupBalances } from '@/lib/utils'
+import { cn, formatCurrency } from '@/lib/utils'
 import { EditItemButton } from './edit-item-btn'
 
 export function ItemsTable({ group }: { group: Group }) {
   const columns: ColumnDef<Item>[] = [
     {
       id: 'actions',
-      header: _ => <TableHead key='actions' className='bg-accent/50' />,
-      cell: ({ row, cell }) => <TableCell key={cell.id} className='bg-accent/50 pl-4'>
+      header: _ => <TableHead className='bg-accent/50' />,
+      cell: ({ row, cell }) => <TableCell className='bg-accent/50 pl-4'>
         <EditItemButton group={group} item={row.original} className='size-5' />
-      </TableCell>
+      </TableCell>,
+      footer: () => <TableCell className='bg-accent/50' />
     },
     {
       accessorKey: 'name',
-      header: _ => <TableHead key='name' className='text-lg bg-accent/50'>
+      header: _ => <TableHead className='text-lg bg-accent/50'>
         Item
       </TableHead>,
-      cell: ({ row, cell }) => <TableCell key={cell.id} className='bg-accent/50'>
+      cell: ({ row, cell }) => <TableCell className='bg-accent/50'>
         {row.original.name}
+      </TableCell>,
+      footer: () => <TableCell className='bg-accent/50'>
+        Total
       </TableCell>
     },
     ...group.members.map(member => ({
       id: member,
-      header: _ => <TableHead key={member} className='text-lg border-l bg-accent/30'>
+      header: _ => <TableHead className='text-lg border-l bg-accent/30'>
         {member}
       </TableHead>,
-      cell: ({ row, cell }) => {
+      cell: ({ row }) => {
         return (
-          <TableCell key={cell.id} className='border-l p-0'>
+          <TableCell className='border-l p-0'>
             <MemberItemSummary
               isOwed={row.original.owees[member]}
-              owes={row.original.owers[member]}
+              owes={group.paymentsRequired()[row.original.name][member]}
             />
+          </TableCell>
+        )
+      },
+      footer: _ => {
+        const balance = group.balances()[member]
+        const colour = balance === 0 ?
+          'bg-accent/70' :
+          balance > 0 ?
+            'bg-green-300/30' :
+            'bg-red-300/30'
+        return (
+          <TableCell className={cn(colour, 'border-l')}>
+            {formatCurrency(balance)}
           </TableCell>
         )
       }
@@ -89,32 +106,19 @@ export function ItemsTable({ group }: { group: Group }) {
                   }
                 </TableRow>
               ))}
-              <TableRow key='_total'>
-                <TableCell key='_total_actions' className='bg-accent/50' />
-                <TableCell key='_total_name' className='bg-accent/50'>
-                  Total
-                </TableCell>
-                {
-                  group.members.map(member => {
-                    const balance = groupBalances(group)[member]
-                    const colour = balance === 0 ?
-                      'bg-accent/70' :
-                      balance > 0 ?
-                        'bg-green-300/30' :
-                        'bg-red-300/30'
-                    return (
-                      <TableCell key={`_${member}_total`}
-                        className={cn(colour, 'border-l')}
-                      >
-                        {formatCurrency(balance)}
-                      </TableCell>
-                    )
-                  })
-                }
-              </TableRow>
+              {table.getFooterGroups().map(footerGroup => (
+                <TableRow key={footerGroup.id}>
+                  {
+                    footerGroup.headers.map(header => flexRender(
+                      header.column.columnDef.footer,
+                      header.getContext()
+                    ))
+                  }
+                </TableRow>
+              ))}
             </>
           ) : (
-            <TableRow>
+            <TableRow key='noitems'>
               <TableCell colSpan={columns.length} className="h-24 text-center">
                 No items.
               </TableCell>
