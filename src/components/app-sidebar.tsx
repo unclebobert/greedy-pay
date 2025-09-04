@@ -1,16 +1,15 @@
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarTrigger, useSidebar } from '@/components/ui/sidebar';
 import { AppLogo } from './ui/app-logo';
 import { ThemeButton } from './theme-button';
-import { ArrowLeft } from 'lucide-react';
-import { useNavigate, useParams } from '@tanstack/react-router';
+import { useParams } from '@tanstack/react-router';
 import { NewGroupButton } from '@/components/groups/list/new-group-btn';
 import { GroupList } from '@/components/groups/list/group-list';
 import { useLiveQuery } from 'dexie-react-hooks';
 import db from '@/db';
 import { ImportGroupButton } from './groups/list/import-group-btn';
+import { ResetButton } from './reset-button';
 
 export function AppSidebar() {
-  const nav = useNavigate()
   const groups = useLiveQuery(() => db.groups.toArray()) || []
   const { groupId } = useParams({ strict: false })
   return (
@@ -36,6 +35,7 @@ export function AppSidebar() {
       <SidebarFooter className='pb-2'>
         <div className='flex gap-2'>
           <ThemeButton />
+          <ResetButton />
           <AppLogo className='ml-auto size-8' />
         </div>
       </SidebarFooter>
