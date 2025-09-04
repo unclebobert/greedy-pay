@@ -54,9 +54,7 @@ export function EditItemButton({
           <hr />
           <div className='grid gap-2'>
             <Label className='font-semibold'>Debtors</Label>
-            <OwersList group={group} item={item}
-              owers={owers} setOwers={setOwers}
-            />
+            <OwersList group={group} owers={owers} setOwers={setOwers} />
           </div>
         </div>
         <DialogFooter>

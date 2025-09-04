@@ -2,11 +2,10 @@
 
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import type { Group, Item } from '@/db';
+import type { Group } from '@/db';
 
-export function OwersList({ group, item, owers, setOwers }: {
+export function OwersList({ group, owers, setOwers }: {
   group: Group,
-  item: Item,
   owers: string[] | undefined,
   setOwers: (newOwers: string[] | undefined) => void,
 }) {

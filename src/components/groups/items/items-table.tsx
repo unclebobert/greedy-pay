@@ -24,7 +24,7 @@ export function ItemsTable({ group }: { group: Group }) {
     {
       id: 'actions',
       header: _ => <TableHead className='bg-accent/50' />,
-      cell: ({ row, cell }) => <TableCell className='bg-accent/50 pl-4'>
+      cell: ({ row }) => <TableCell className='bg-accent/50 pl-4'>
         <EditItemButton group={group} item={row.original} className='size-5' />
       </TableCell>,
       footer: () => <TableCell className='bg-accent/50' />
@@ -34,14 +34,14 @@ export function ItemsTable({ group }: { group: Group }) {
       header: _ => <TableHead className='text-lg bg-accent/50'>
         Item
       </TableHead>,
-      cell: ({ row, cell }) => <TableCell className='bg-accent/50'>
+      cell: ({ row }) => <TableCell className='bg-accent/50'>
         {row.original.name}
       </TableCell>,
       footer: () => <TableCell className='bg-accent/50'>
         Total
       </TableCell>
     },
-    ...group.members.map(member => ({
+    ...group.members.sort().map(member => ({
       id: member,
       header: _ => <TableHead className='text-lg border-l bg-accent/30'>
         {member}
