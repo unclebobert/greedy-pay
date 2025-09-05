@@ -15,7 +15,7 @@ function Group() {
   const groupId = parseInt(groupIdRaw)
   const group = useLiveQuery(() => db.groups.get(groupId), [groupId])
   return (
-    <div className='w-full h-full p-8 md:px-16 md:py-12'>
+    <div className='w-full h-full p-8 md:p-12 lg:px-16'>
       {group ?
         <GroupView group={group} /> :
         <LoaderCircle className='animate-spin m-auto size-24' />
