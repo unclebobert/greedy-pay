@@ -11,7 +11,9 @@ import { ThemeProvider } from './components/theme-provider'
 const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
-  context: { auth: undefined! }
+  context: { auth: undefined! },
+  basepath: '/greedy-pay/',
+  
 })
 
 // Declare the router in the global scope
