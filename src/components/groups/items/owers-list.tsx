@@ -12,11 +12,11 @@ import {
 
 import type { Group } from '@/db';
 
-export function OwersList({ group, owers, setOwers, totalToSplit }: {
+export function OwersList({ group, owers, setOwers, remainingToSplit }: {
   group: Group,
   owers: string[] | { [member: string]: number } | undefined,
   setOwers: (newOwers: string[] | { [member: string]: number } | undefined) => void,
-  totalToSplit: number
+  remainingToSplit: number
 }) {
   const splitAllEqual = !owers
   const splitSomeEqual = owers instanceof Array
@@ -86,8 +86,8 @@ export function OwersList({ group, owers, setOwers, totalToSplit }: {
               <TableCell>
                 <div className='flex gap-2 items-center'>
                   <span>owes</span>
-                  <Input disabled
-                    value={(totalToSplit - Object.values(owers).reduce((a, b) => a + b, 0)) / 100}
+                  <Input disabled value={remainingToSplit / 100}
+                    aria-invalid={remainingToSplit !== 0}
                   />
                 </div>
               </TableCell>

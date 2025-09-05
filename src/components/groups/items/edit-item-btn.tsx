@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/label'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import db, { type Group, type Item } from '@/db'
-import { cn } from '@/lib/utils'
+import { cn, formatCurrency } from '@/lib/utils'
 import { OweesList } from './owees-list'
 import { OwersList } from './owers-list'
 
@@ -26,6 +26,12 @@ export function EditItemButton({
   const [name, setName] = useState(item.name)
   const [owees, setOwees] = useState(item.owees)
   const [owers, setOwers] = useState(item.owers)
+  const remainingCentsToSplit = owers && !(owers instanceof Array) ?
+    (
+      Object.values(owees).reduce((a, b) => a + b, 0) -
+      Object.values(owers).reduce((a, b) => a + b, 0)
+    ) :
+    0
 
   return (
     <Dialog>
@@ -36,7 +42,7 @@ export function EditItemButton({
         <DialogHeader>
           <DialogTitle>Edit Item <em>{item.name}</em></DialogTitle>
         </DialogHeader>
-        <div className='overflow-auto'>
+        <div className='overflow-auto p-2'>
           <div className='grid gap-4'>
             <div className='grid gap-2'>
               <Label className='font-semibold' htmlFor='item-name'>Name</Label>
@@ -53,11 +59,11 @@ export function EditItemButton({
             <div className='grid gap-2'>
               <Label className='font-semibold'>Debtors</Label>
               <OwersList group={group} owers={owers} setOwers={setOwers}
-                totalToSplit={Object.values(owees).reduce((a, b) => a + b, 0)}
+                remainingToSplit={remainingCentsToSplit}
               />
             </div>
           </div>
-          <DialogFooter>
+          <DialogFooter className='mt-2'>
             <DialogClose asChild>
               <Button variant='outline'>Cancel</Button>
             </DialogClose>
@@ -70,6 +76,15 @@ export function EditItemButton({
                 // If name !== item.name, indicates that name in input is
                 // different from original name of item
                 toast.error('The group already contains an item with the same name')
+                return
+              }
+              if (remainingCentsToSplit !== 0) {
+                // Variable is set to 0 if not manual splitting
+                toast.error(`
+                  There is still
+                  ${formatCurrency(remainingCentsToSplit)}
+                  unaccounted for
+                `)
                 return
               }
               const parsedOwees = Object.fromEntries(
