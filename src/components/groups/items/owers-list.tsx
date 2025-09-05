@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table"
 
 import type { Group } from '@/db';
+import { useState } from 'react';
 
 export function OwersList({ group, owers, setOwers, remainingToSplit }: {
   group: Group,
@@ -21,6 +22,7 @@ export function OwersList({ group, owers, setOwers, remainingToSplit }: {
   const splitAllEqual = !owers
   const splitSomeEqual = owers instanceof Array
   const splitManual = !(splitAllEqual || splitSomeEqual)
+  const [storedManualSplit, setStoredManualSplit] = useState(splitManual ? owers : {})
   return (
     <>
       <div className='flex items-center gap-3'>
@@ -33,7 +35,7 @@ export function OwersList({ group, owers, setOwers, remainingToSplit }: {
         <div className='flex items-center gap-3'>
           <Label>Split among selected members <strong>equally</strong></Label>
           <Checkbox checked={splitSomeEqual}
-            onClick={() => setOwers(splitSomeEqual ? {} : group.members)}
+            onClick={() => setOwers(splitSomeEqual ? storedManualSplit : group.members)}
           />
         </div>
       }
@@ -65,16 +67,19 @@ export function OwersList({ group, owers, setOwers, remainingToSplit }: {
                       onChange={e => {
                         // Multiple and round as amount needs to be stored in cents
                         const cents = Math.round(parseFloat(e.target.value) * 100)
+                        let newOwers: { [member: string]: number }
                         if (!cents) {
-                          setOwers(Object.fromEntries(
+                          newOwers = Object.fromEntries(
                             Object.entries(owers).filter(([m]) => m !== member)
-                          ))
+                          )
                         } else {
-                          setOwers({
+                          newOwers = {
                             ...owers,
                             [member]: Math.round(parseFloat(e.target.value) * 100)
-                          })
+                          }
                         }
+                        setOwers(newOwers)
+                        setStoredManualSplit(newOwers)
                       }}
                     />
                   </div>
