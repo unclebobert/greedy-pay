@@ -18,6 +18,7 @@ import type { Group, Item } from '@/db'
 import { MemberItemSummary } from './member-item-summary'
 import { cn, formatCurrency } from '@/lib/utils'
 import { EditItemButton } from './edit-item-btn'
+import { Fragment } from 'react/jsx-runtime'
 
 export function ItemsTable({ group }: { group: Group }) {
   const columns: ColumnDef<Item>[] = [
@@ -85,9 +86,13 @@ export function ItemsTable({ group }: { group: Group }) {
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {
-                headerGroup.headers.map(header => flexRender(
-                  header.column.columnDef.header,
-                  header.getContext()
+                headerGroup.headers.map(header => (
+                  <Fragment key={header.id}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                  </Fragment>
                 ))
               }
             </TableRow>
@@ -99,9 +104,13 @@ export function ItemsTable({ group }: { group: Group }) {
               {table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id}>
                   {
-                    row.getVisibleCells().map(cell => flexRender(
-                      cell.column.columnDef.cell,
-                      cell.getContext()
+                    row.getVisibleCells().map(cell => (
+                      <Fragment key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </Fragment>
                     ))
                   }
                 </TableRow>
@@ -109,9 +118,13 @@ export function ItemsTable({ group }: { group: Group }) {
               {table.getFooterGroups().map(footerGroup => (
                 <TableRow key={footerGroup.id}>
                   {
-                    footerGroup.headers.map(header => flexRender(
-                      header.column.columnDef.footer,
-                      header.getContext()
+                    footerGroup.headers.map(header => (
+                      <Fragment key={header.id}>
+                        {flexRender(
+                          header.column.columnDef.footer,
+                          header.getContext()
+                        )}
+                      </Fragment>
                     ))
                   }
                 </TableRow>
