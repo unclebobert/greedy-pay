@@ -29,10 +29,7 @@ export function EditItemButton({
 
   return (
     <Dialog>
-      <DialogTrigger asChild onClick={_ => {
-        setOwees(item.owees)
-        setOwers(item.owers)
-      }}>
+      <DialogTrigger asChild>
         <Edit3 className={cn(className, 'hover:text-muted-foreground cursor-pointer my-1')} />
       </DialogTrigger>
       <DialogContent className='sm:max-w-[600px]'>

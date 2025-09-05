@@ -38,7 +38,6 @@ class Group {
       const participants = item.owers ?? this.members
       const base = Math.floor(total / participants.length)
       const amounts = Object.fromEntries(participants.map(m => [m, base]))
-      console.log(`splitting ${total} among ${participants.length} people; each person pays base of ${base}`)
       // The minimum amount that cannot be split evenly among all members
       let totalRemainder = total - (participants.length * base)
       while (totalRemainder > 0) {
@@ -148,6 +147,22 @@ class Group {
     this.created = groupData.created
     this.members = groupData.members
     this.items = groupData.items
+  }
+
+  /**
+   * DO NOT USE EXPLICITLY
+   * 
+   * Used by JSON.stringify
+   */
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      description: this.description,
+      created: this.created,
+      members: this.members,
+      items: this.items,
+    }
   }
 }
 
