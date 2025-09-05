@@ -46,6 +46,7 @@ export function ImportGroupButton({ className }: React.ComponentProps<'svg'>) {
               }
               const data = JSON.parse(raw)
               db.groups.add({ ...data, created: new Date(), id: undefined })
+              toast.success(`Successfully imported group ${data['name']}`)
             }}>Import</Button>
           </DialogClose>
         </DialogFooter>

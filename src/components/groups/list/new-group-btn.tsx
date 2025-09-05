@@ -61,6 +61,7 @@ export function NewGroupButton({ className }: React.ComponentProps<'svg'>) {
               members: [],
               items: [],
             })
+            toast.success(`Successfully created new group ${name}`)
           }}>Create</Button>
         </DialogFooter>
       </DialogContent>
