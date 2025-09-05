@@ -34,6 +34,11 @@ class Group {
     // queue to spread 'suffering' as equally as possible
     const nextToSuffer = this.members
     for (const item of this.items) {
+      if (item.owers && !(item.owers instanceof Array)) {
+        // Means manual splitting, assume that it is correct and add to payments
+        payments[item.name] = item.owers
+        continue
+      }
       const total = Object.values(item.owees).reduce((a, b) => a + b, 0)
       const participants = item.owers ?? this.members
       const base = Math.floor(total / participants.length)
@@ -177,11 +182,13 @@ interface Item {
   owees: { [member: string]: number }
   /**
    * Who owes money: how much they owe
-   * if does not exist, means split b/w everyone equally
-   * if list of strings means split b/w people in list
-   * if map, maps each person to amount they pay
+   * 
+   * - if does not exist, means split b/w everyone equally
+   * - if list of strings means split b/w people in list
+   * - if map, maps each person to amount they pay.
+   *   note that this assumes that the total ALWAYS adds up to the amount owed
    */
-  owers?: string[]
+  owers?: string[] | { [member: string]: number }
 }
 
 const db = new Dexie('Database') as Dexie & {

@@ -32,57 +32,61 @@ export function EditItemButton({
       <DialogTrigger asChild>
         <Edit3 className={cn(className, 'hover:text-muted-foreground cursor-pointer my-1')} />
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[600px]'>
+      <DialogContent className='sm:max-w-[600px] max-h-11/12 flex flex-col'>
         <DialogHeader>
           <DialogTitle>Edit Item <em>{item.name}</em></DialogTitle>
         </DialogHeader>
-        <div className='grid gap-4'>
-          <div className='grid gap-2'>
-            <Label className='font-semibold' htmlFor='item-name'>Name</Label>
-            <Input id='item-name' name='name' value={name}
-              onChange={e => setName(e.target.value)}
-            />
+        <div className='overflow-auto'>
+          <div className='grid gap-4'>
+            <div className='grid gap-2'>
+              <Label className='font-semibold' htmlFor='item-name'>Name</Label>
+              <Input id='item-name' name='name' value={name}
+                onChange={e => setName(e.target.value)}
+              />
+            </div>
+            <hr />
+            <div className='grid gap-2'>
+              <Label className='font-semibold'>Creditors</Label>
+              <OweesList group={group} owees={owees} setOwees={setOwees} />
+            </div>
+            <hr />
+            <div className='grid gap-2'>
+              <Label className='font-semibold'>Debtors</Label>
+              <OwersList group={group} owers={owers} setOwers={setOwers}
+                totalToSplit={Object.values(owees).reduce((a, b) => a + b, 0)}
+              />
+            </div>
           </div>
-          <hr />
-          <div className='grid gap-2'>
-            <Label className='font-semibold'>Creditors</Label>
-            <OweesList group={group} owees={owees} setOwees={setOwees} />
-          </div>
-          <hr />
-          <div className='grid gap-2'>
-            <Label className='font-semibold'>Debtors</Label>
-            <OwersList group={group} owers={owers} setOwers={setOwers} />
-          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant='outline'>Cancel</Button>
+            </DialogClose>
+            <Button variant='success' onClick={_ => {
+              if (!name) {
+                toast.error('The item must have a name')
+                return
+              }
+              if (name !== item.name && group.items.some(item => item.name === name)) {
+                // If name !== item.name, indicates that name in input is
+                // different from original name of item
+                toast.error('The group already contains an item with the same name')
+                return
+              }
+              const parsedOwees = Object.fromEntries(
+                Object.entries(owees).filter(([_, amount]) => amount > 0)
+              )
+              db.groups.update(group.id, {
+                items: [
+                  ...group.items.map(i => {
+                    if (i.name !== item.name) return i
+                    return { name, owees: parsedOwees, owers }
+                  }),
+                ],
+              })
+              toast.success(`Successfully saved all changes`)
+            }}>Save Changes</Button>
+          </DialogFooter>
         </div>
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant='outline'>Cancel</Button>
-          </DialogClose>
-          <Button variant='success' onClick={_ => {
-            if (!name) {
-              toast.error('The item must have a name')
-              return
-            }
-            if (name !== item.name && group.items.some(item => item.name === name)) {
-              // If name !== item.name, indicates that name in input is
-              // different from original name of item
-              toast.error('The group already contains an item with the same name')
-              return
-            }
-            const parsedOwees = Object.fromEntries(
-              Object.entries(owees).filter(([_, amount]) => amount > 0)
-            )
-            db.groups.update(group.id, {
-              items: [
-                ...group.items.map(i => {
-                  if (i.name !== item.name) return i
-                  return { name, owees: parsedOwees, owers }
-                }),
-              ],
-            })
-            toast.success(`Successfully saved all changes`)
-          }}>Save Changes</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   )

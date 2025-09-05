@@ -1,41 +1,100 @@
 
 
 import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@/components/ui/table"
+
 import type { Group } from '@/db';
 
-export function OwersList({ group, owers, setOwers }: {
+export function OwersList({ group, owers, setOwers, totalToSplit }: {
   group: Group,
-  owers: string[] | undefined,
-  setOwers: (newOwers: string[] | undefined) => void,
+  owers: string[] | { [member: string]: number } | undefined,
+  setOwers: (newOwers: string[] | { [member: string]: number } | undefined) => void,
+  totalToSplit: number
 }) {
+  const splitAllEqual = !owers
+  const splitSomeEqual = owers instanceof Array
+  const splitManual = !(splitAllEqual || splitSomeEqual)
   return (
     <>
       <div className='flex items-center gap-3'>
-        <Label>Split among everyone equally</Label>
-        <Checkbox checked={!owers}
-          onClick={() => setOwers(owers ? undefined : group.members)}
+        <Label>Split among <strong>all</strong> members equally</Label>
+        <Checkbox checked={splitAllEqual}
+          onClick={() => setOwers(splitAllEqual ? group.members : undefined)}
         />
       </div>
-      {owers && (
-        <>
-          <Label>Choose who to split among:</Label>
-            {group.members.map(m => (
-              <div key={m + 'cb'} className='flex items-center gap-3 ml-4'>
-                <Checkbox checked={owers.includes(m)}
-                  onClick={() => {
-                    if (owers.includes(m)) {
-                      setOwers(owers.filter(o => o !== m))
-                    } else {
-                      setOwers([...owers, m])
-                    }
-                  }}
-                />
-                <Label>{m}</Label>
-              </div>
+      {!splitAllEqual &&
+        <div className='flex items-center gap-3'>
+          <Label>Split among selected members <strong>equally</strong></Label>
+          <Checkbox checked={splitSomeEqual}
+            onClick={() => setOwers(splitSomeEqual ? {} : group.members)}
+          />
+        </div>
+      }
+      {splitSomeEqual && group.members.map(m => (
+        <div key={m + 'cb'} className='flex items-center gap-3 ml-4'>
+          <Checkbox checked={owers.includes(m)}
+            onClick={() => {
+              if (owers.includes(m)) {
+                setOwers(owers.filter(o => o !== m))
+              } else {
+                setOwers([...owers, m])
+              }
+            }}
+          />
+          <Label>{m}</Label>
+        </div>
+      ))}
+      {splitManual &&
+        <Table>
+          <TableBody>
+            {group.members.map(member => (
+              <TableRow key={`ower_${member}`}>
+                <TableCell>{member}</TableCell>
+                <TableCell>
+                  <div className='flex gap-2 items-center'>
+                    <span>owes</span>
+                    <Input type='number' min={0} step={0.01}
+                      value={member in owers ? owers[member] / 100 : 0}
+                      onChange={e => {
+                        // Multiple and round as amount needs to be stored in cents
+                        const cents = Math.round(parseFloat(e.target.value) * 100)
+                        if (!cents) {
+                          setOwers(Object.fromEntries(
+                            Object.entries(owers).filter(([m]) => m !== member)
+                          ))
+                        } else {
+                          setOwers({
+                            ...owers,
+                            [member]: Math.round(parseFloat(e.target.value) * 100)
+                          })
+                        }
+                      }}
+                    />
+                  </div>
+                </TableCell>
+              </TableRow>
             ))}
-        </>
-      )}
+            <TableRow>
+              <TableCell>Unassigned</TableCell>
+              <TableCell>
+                <div className='flex gap-2 items-center'>
+                  <span>owes</span>
+                  <Input disabled
+                    value={(totalToSplit - Object.values(owers).reduce((a, b) => a + b, 0)) / 100}
+                  />
+                </div>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      }
     </>
   )
 }
