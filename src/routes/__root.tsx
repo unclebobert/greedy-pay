@@ -1,4 +1,4 @@
-import { AppSidebar, AppSidebarOpen } from '@/components/app-sidebar'
+import { AppSidebar, AppSidebarOpen } from '@/components/sidebar/app-sidebar'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
 import { createRootRoute, Outlet } from '@tanstack/react-router'

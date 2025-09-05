@@ -1,4 +1,3 @@
-import { Trash2 } from 'lucide-react'
 import {
   Dialog,
   DialogTrigger,
@@ -15,17 +14,15 @@ import { DialogDescription } from '@radix-ui/react-dialog'
 import { cn } from '@/lib/utils'
 import { useNavigate } from '@tanstack/react-router'
 
-export function ResetButton({ className, ...props }: React.ComponentProps<'svg'>) {
+export function ResetButton({ className, ...props }: React.ComponentProps<'button'>) {
   const nav = useNavigate()
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Trash2 {...props}
-          className={cn(
-            className,
-            'size-8 text-red-600/80 hover:text-red-600/60 cursor-pointer'
-          )}
-        />
+        <Button variant='destructive' {...props}
+          className={cn(className, 'cursor-pointer')}>
+          Delete All Data
+        </Button>
       </DialogTrigger>
       <DialogContent className='sm:max-w-[600px]'>
         <DialogHeader className='min-w-0 overflow-x-clip'>
