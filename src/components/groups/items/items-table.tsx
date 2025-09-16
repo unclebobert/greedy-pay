@@ -82,25 +82,25 @@ export function ItemsTable({ group }: { group: Group }) {
   return (
     <div className='max-w-full'>
       <Table className='overflow-auto'>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {
-                headerGroup.headers.map(header => (
-                  <Fragment key={header.id}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                  </Fragment>
-                ))
-              }
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            <>
+        {table.getRowModel().rows?.length ?
+          <>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {
+                    headerGroup.headers.map(header => (
+                      <Fragment key={header.id}>
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                      </Fragment>
+                    ))
+                  }
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
               {table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id}>
                   {
@@ -129,15 +129,16 @@ export function ItemsTable({ group }: { group: Group }) {
                   }
                 </TableRow>
               ))}
-            </>
-          ) : (
-            <TableRow key='noitems'>
+            </TableBody>
+          </> :
+          <TableBody>
+            <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No items.
+                This group currently has no items.
               </TableCell>
             </TableRow>
-          )}
-        </TableBody>
+          </TableBody>
+        }
       </Table>
     </div>
   )
