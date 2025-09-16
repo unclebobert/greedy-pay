@@ -40,7 +40,7 @@ export function AddItemButton({
         </DialogHeader>
         <div className='grid gap-2'>
           <Label htmlFor='item-name'>Name</Label>
-          <Input id='item-name' name='name' defaultValue='New Item'
+          <Input id='item-name' name='name'
             value={name} onChange={e => setName(e.target.value)}
           />
         </div>

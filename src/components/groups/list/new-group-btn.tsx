@@ -32,7 +32,7 @@ export function NewGroupButton({ className }: React.ComponentProps<'svg'>) {
         <div className='grid gap-4'>
           <div className='grid gap-3'>
             <Label htmlFor='group-name'>Name</Label>
-            <Input id='group-name' name='name' defaultValue='New Group'
+            <Input id='group-name' name='name'
               value={name} onChange={e => setName(e.target.value)}
               maxLength={20}
             />

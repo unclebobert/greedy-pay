@@ -32,7 +32,7 @@ export function AddMemberButton({
         </DialogHeader>
         <div className='grid gap-2'>
           <Label htmlFor='member-name'>Name</Label>
-          <Input id='member-name' name='name' defaultValue='New Member'
+          <Input id='member-name' name='name'
             value={name} onChange={e => setName(e.target.value)}
           />
         </div>

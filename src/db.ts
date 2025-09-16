@@ -32,7 +32,8 @@ class Group {
     // else, need to calculate payments required
     const payments: { [item: string]: { [member: string]: number } } = {}
     // queue to spread 'suffering' as equally as possible
-    const nextToSuffer = this.members
+    // ensure this is a copy of the members array to prevent mutation
+    const nextToSuffer = this.members.slice()
     for (const item of this.items) {
       if (item.owers && !(item.owers instanceof Array)) {
         // Means manual splitting, assume that it is correct and add to payments
