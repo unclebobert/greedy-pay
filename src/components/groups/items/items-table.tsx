@@ -32,7 +32,7 @@ export function ItemsTable({ group }: { group: Group }) {
     },
     {
       accessorKey: 'name',
-      header: _ => <TableHead className='text-lg bg-accent/50'>
+      header: _ => <TableHead className='bg-accent/50'>
         Item
       </TableHead>,
       cell: ({ row }) => <TableCell className='bg-accent/50'>
@@ -42,9 +42,9 @@ export function ItemsTable({ group }: { group: Group }) {
         Total
       </TableCell>
     },
-    ...group.members.sort().map(member => ({
+    ...group.members.map(member => ({
       id: member,
-      header: _ => <TableHead className='text-lg border-l bg-accent/30'>
+      header: _ => <TableHead className='border-l bg-accent/30'>
         {member}
       </TableHead>,
       cell: ({ row }) => {

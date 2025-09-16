@@ -50,7 +50,7 @@ export function AddMemberButton({
               return
             }
             db.groups.update(group.id, {
-              members: [...group.members, name]
+              members: [...group.members, name].sort()
             })
             toast.success(`Successfully added ${name} to the group`)
           }}>Add</Button>
