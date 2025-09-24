@@ -19,6 +19,7 @@ import { MemberItemSummary } from './member-item-summary'
 import { cn, formatCurrency } from '@/lib/utils'
 import { EditItemButton } from './edit-item-btn'
 import { Fragment } from 'react/jsx-runtime'
+import { DeleteItemButton } from './delete-item-btn'
 
 export function ItemsTable({ group }: { group: Group }) {
   const columns: ColumnDef<Item>[] = [
@@ -26,7 +27,10 @@ export function ItemsTable({ group }: { group: Group }) {
       id: 'actions',
       header: _ => <TableHead className='bg-accent/50' />,
       cell: ({ row }) => <TableCell className='bg-accent/50 pl-4'>
-        <EditItemButton group={group} item={row.original} className='size-5' />
+        <div className='flex gap-3 items-center'>
+          <EditItemButton group={group} item={row.original} className='size-5' />
+          <DeleteItemButton group={group} item={row.original} className='size-5' />
+        </div>
       </TableCell>,
       footer: () => <TableCell className='bg-accent/50' />
     },
