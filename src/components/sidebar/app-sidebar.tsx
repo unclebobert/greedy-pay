@@ -1,13 +1,15 @@
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarTrigger, useSidebar } from '@/components/ui/sidebar';
-import { AppLogo } from '@/components/ui/app-logo';
-import { ThemeButton } from './theme-button';
-import { useParams } from '@tanstack/react-router';
-import { NewGroupButton } from '@/components/groups/list/new-group-btn';
-import { GroupList } from '@/components/groups/list/group-list';
-import { useLiveQuery } from 'dexie-react-hooks';
-import db from '@/db';
-import { ImportGroupButton } from '@/components/groups/list/import-group-btn';
-import { SettingsButton } from './settings-button';
+import { GroupList } from '@/components/groups/list/group-list'
+import { ImportGroupButton } from '@/components/groups/list/import-group-btn'
+import { NewGroupButton } from '@/components/groups/list/new-group-btn'
+import { AppLogo } from '@/components/ui/app-logo'
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarTrigger, useSidebar } from '@/components/ui/sidebar'
+import { SettingsButton } from './settings-button'
+import { ThemeButton } from './theme-button'
+
+import db from '@/db'
+
+import { useParams } from '@tanstack/react-router'
+import { useLiveQuery } from 'dexie-react-hooks'
 
 export function AppSidebar() {
   const groups = useLiveQuery(() => db.groups.toArray()) || []
@@ -36,7 +38,9 @@ export function AppSidebar() {
         <div className='flex gap-2'>
           <ThemeButton />
           <SettingsButton />
-          <AppLogo className='ml-auto size-8' />
+          <a href='/' className='ml-auto cursor-pointer'>
+            <AppLogo className='size-8'/>
+          </a>
         </div>
       </SidebarFooter>
       <AppSidebarClose />

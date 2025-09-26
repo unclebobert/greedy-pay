@@ -117,21 +117,21 @@ class Group {
           // If debtor can get even by paying to the payee, debtor wlll pay full
           // remaining debt to the payee, and payee will have the amount
           // taken from their credit
-          amountPaid = -balances[member];
+          amountPaid = -balances[member]
           // deduct credit from payee
-          balances[payeeName] = payeeCredit - amountPaid;
+          balances[payeeName] = payeeCredit - amountPaid
           // payer is now even
-          balances[member] = 0;
+          balances[member] = 0
         } else {
           // If debtor's current balance cannot be paid in full, debtor will pay
           // only amount equal to payee's credit
-          amountPaid = payeeCredit;
+          amountPaid = payeeCredit
           // pay the payee
-          balances[payeeName] = 0;
+          balances[payeeName] = 0
           // the payer pays
-          balances[member] += amountPaid;
+          balances[member] += amountPaid
         }
-        transactions[member][payeeName] = amountPaid;
+        transactions[member][payeeName] = amountPaid
       }
     }
     for (const [member, amount] of Object.entries(balances)) {
