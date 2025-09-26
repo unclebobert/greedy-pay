@@ -19,22 +19,26 @@ export function DeleteMemberButton({
   group,
   member
 }: React.ComponentProps<'svg'> & { group: Group, member: string }) {
-  const deletable = group.items.every(item => {
-    // if person needs to be paid, not deletable
-    if (Object.keys(item.owees).includes(member)) return false
+  const reasons: string[] = []
+  for (const item of group.items) {
+    if (Object.keys(item.owees).includes(member)) {
+      reasons.push(`Is owed money for item "${item.name}"`)
+    }
     // else if the item is being split equally amongst all, can delete
     // since it will redistribute
-    if (!item.owers) return true
-    // else if the item is being split equally among some, can delete only if
-    // person is not included 
-    if (item.owers instanceof Array) return !item.owers.includes(member)
-    // else if item is a being manually split, can delete only if person is not
-    // included
-    return !Object.keys(item.owers).includes(member)
-  })
+    if (!item.owers) continue
+    // else if item is a being manually split,
+    // can delete only if person is not included
+    if (
+      (item.owers instanceof Array && item.owers.includes(member)) ||
+      !(item.owers instanceof Array) && Object.keys(item.owers).includes(member)
+    ) {
+      reasons.push(`Is explicitly listed as an debtor for item "${item.name}"`)
+    }
+  }
   return (
     <Dialog>
-      {deletable ?
+      {reasons.length === 0 ?
         <DialogTrigger asChild>
           <Trash2 className={cn(className, 'my-1 hover:text-muted-foreground cursor-pointer')}/>
         </DialogTrigger> :
@@ -44,8 +48,10 @@ export function DeleteMemberButton({
           </TooltipTrigger>
           <TooltipContent>
             <p>
-              {member} cannot be deleted as they are still <br />
-              explicitly participating in the splitting of an item
+              {member} cannot be deleted for the following reasons:
+              <ul className='list-disc list-inside mt-2'>
+                {reasons.map((r, i) => <li key={`reason_${i}`}>{r}</li>)}
+              </ul>
             </p>
           </TooltipContent>
         </Tooltip>
