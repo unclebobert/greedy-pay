@@ -61,6 +61,7 @@ export function AddItemButton({
             const newItems = [...group.items, { name, owees: {} }]
             db.groups.update(group.id, { items: newItems })
             toast.success(`Successfully added item '${name}'`)
+            setName('')
           }}>Add</Button>
         </DialogFooter>
       </DialogContent>

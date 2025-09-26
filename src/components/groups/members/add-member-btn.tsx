@@ -53,6 +53,7 @@ export function AddMemberButton({
               members: [...group.members, name].sort()
             })
             toast.success(`Successfully added ${name} to the group`)
+            setName('')
           }}>Add</Button>
         </DialogFooter>
       </DialogContent>
