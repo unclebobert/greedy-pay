@@ -33,6 +33,12 @@ export function EditItemButton({
     ) :
     0
 
+  function resetItem() {
+    setName(item.name)
+    setOwees(item.owees)
+    setOwers(item.owers)
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -65,7 +71,9 @@ export function EditItemButton({
           </div>
           <DialogFooter className='mt-2'>
             <DialogClose asChild>
-              <Button variant='outline'>Cancel</Button>
+              <Button variant='outline' onClick={resetItem}>
+                Cancel
+              </Button>
             </DialogClose>
             <Button variant='success' onClick={_ => {
               if (!name) {

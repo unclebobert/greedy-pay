@@ -28,14 +28,42 @@ export function OweesList({ group, owees, setOwees }: {
     setNewOwee('')
   }
 
+  function swapOwee(oldName: string, newName: string) {
+    const { [oldName]: oldAmount, ...rest } = owees
+    if (newName in owees) {
+      // If swapping to an existing owee, swap the two amounts
+      setOwees({ ...rest, [newName]: oldAmount, [oldName]: owees[newName] })
+    } else {
+      // Otherwise just rename the owee
+      setOwees({ ...rest, [newName]: oldAmount })
+    }
+  }
+
   return (
     <Table>
       <TableBody>
         {
-          Object.entries(owees).map(([name, amount]) => (
+          Object.entries(owees).sort().map(([name, amount]) => (
             <TableRow key={`owee_${name}`}>
               <TableCell>
-                {name}
+                <Select value={name}
+                  onValueChange={newName => swapOwee(name, newName)}
+                >
+                  <SelectTrigger className="w-[180px] cursor-pointer">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {group.members
+                      .map(member => (
+                        <SelectItem key={`swap_${member}`} value={member}
+                          className='cursor-pointer'
+                        >
+                          {member}
+                        </SelectItem>
+                      ))
+                    }
+                  </SelectContent>
+                </Select>
               </TableCell>
               <TableCell>
                 <div className='flex gap-2 items-center'>
