@@ -26,11 +26,11 @@ export function GroupMembers({ group }: { group: Group }) {
           {members.length > 0 ?
             members.map(member => (
               <TableRow key={member + group.id}>
-                <TableCell className='bg-accent/50' colSpan={0}>
+                <TableCell className='bg-accent/50 w-0'> {/* w-0 minimises column width */}
                   <div className='flex pl-2 gap-3 items-center'>
                     <EditMemberButton group={group} member={member} className='size-5' />
                     <DeleteMemberButton group={group} member={member} className='size-5' />
-                    <span className='ml-auto'>
+                    <span className='ml-1 mr-2'>
                       {member}
                     </span>
                   </div>

@@ -25,7 +25,7 @@ export function ItemsTable({ group }: { group: Group }) {
   const columns: ColumnDef<Item>[] = [
     {
       id: 'actions',
-      header: _ => <TableHead className='bg-accent/50' />,
+      header: _ => <TableHead className='bg-accent/50 w-0'></TableHead>, // w-0 minimises column width
       cell: ({ row }) => <TableCell className='bg-accent/50 pl-4'>
         <div className='flex gap-3 items-center'>
           <EditItemButton group={group} item={row.original} className='size-5' />
@@ -36,10 +36,10 @@ export function ItemsTable({ group }: { group: Group }) {
     },
     {
       accessorKey: 'name',
-      header: _ => <TableHead className='bg-accent/50'>
+      header: _ => <TableHead className='bg-accent/50 w-0'>
         Item
       </TableHead>,
-      cell: ({ row }) => <TableCell className='bg-accent/50'>
+      cell: ({ row }) => <TableCell className='bg-accent/50 pr-4'>
         {row.original.name}
       </TableCell>,
       footer: () => <TableCell className='bg-accent/50'>
