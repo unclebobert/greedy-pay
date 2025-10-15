@@ -88,7 +88,7 @@ export function OweesList({ group, owees, setOwees }: {
             <Select value={newOwee}
               onValueChange={owee => addNewOwee(owee)}
             >
-              <SelectTrigger className="w-full max-w-32 cursor-pointer">
+              <SelectTrigger className="w-full cursor-pointer">
                 <SelectValue placeholder='Add new creditor' />
               </SelectTrigger>
               <SelectContent>
