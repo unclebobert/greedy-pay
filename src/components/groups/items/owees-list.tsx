@@ -49,7 +49,7 @@ export function OweesList({ group, owees, setOwees }: {
                 <Select value={name}
                   onValueChange={newName => swapOwee(name, newName)}
                 >
-                  <SelectTrigger className="w-[180px] cursor-pointer">
+                  <SelectTrigger className="w-full max-w-32 cursor-pointer">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -69,6 +69,7 @@ export function OweesList({ group, owees, setOwees }: {
                 <div className='flex gap-2 items-center'>
                   <span>is owed</span>
                   <Input type='number' min={0} step={0.01} value={amount / 100}
+                    className='min-w-20'
                     onChange={e => {
                       setOwees({
                         ...owees,
@@ -87,7 +88,7 @@ export function OweesList({ group, owees, setOwees }: {
             <Select value={newOwee}
               onValueChange={owee => addNewOwee(owee)}
             >
-              <SelectTrigger className="w-[180px] cursor-pointer">
+              <SelectTrigger className="w-full max-w-32 cursor-pointer">
                 <SelectValue placeholder='Add new creditor' />
               </SelectTrigger>
               <SelectContent>

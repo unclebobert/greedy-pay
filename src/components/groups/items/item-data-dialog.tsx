@@ -47,7 +47,7 @@ export function ItemDataDialog({
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[600px] max-h-11/12 flex flex-col'>
+      <DialogContent className='px-2 sm:px-6 sm:max-w-[600px] max-h-11/12 flex flex-col'>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
