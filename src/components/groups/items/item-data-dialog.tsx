@@ -36,14 +36,14 @@ export function ItemDataDialog({
     ) :
     0
 
-  function resetItem() {
+  function reset() {
     setName(item.name)
     setOwees(item.owees)
     setOwers(item.owers)
   }
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={open => { if(open) reset() }}>
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
@@ -74,7 +74,7 @@ export function ItemDataDialog({
           </div>
           <DialogFooter className='mt-2'>
             <DialogClose asChild>
-              <Button variant='outline' onClick={resetItem}>
+              <Button variant='outline'>
                 Cancel
               </Button>
             </DialogClose>

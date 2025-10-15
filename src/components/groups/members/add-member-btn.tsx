@@ -22,7 +22,7 @@ export function AddMemberButton({
 }: React.ComponentProps<'svg'> & { group: Group }) {
   const [name, setName] = useState('')
   return (
-    <Dialog>
+    <Dialog onOpenChange={open => { if(open) setName('') }}>
       <DialogTrigger asChild>
         <Plus className={cn(className, 'hover:text-muted-foreground cursor-pointer my-1')} />
       </DialogTrigger>
@@ -53,7 +53,6 @@ export function AddMemberButton({
               members: [...group.members, name].sort()
             })
             toast.success(`Successfully added ${name} to the group`)
-            setName('')
           }}>Add</Button>
         </DialogFooter>
       </DialogContent>

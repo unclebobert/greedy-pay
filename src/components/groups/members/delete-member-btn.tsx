@@ -47,12 +47,10 @@ export function DeleteMemberButton({
             <Trash2 className={cn(className, 'my-1 text-muted-foreground')}/>
           </TooltipTrigger>
           <TooltipContent>
-            <p>
-              {member} cannot be deleted for the following reasons:
-              <ul className='list-disc list-inside mt-2'>
-                {reasons.map((r, i) => <li key={`reason_${i}`}>{r}</li>)}
-              </ul>
-            </p>
+            {member} cannot be deleted for the following reasons:
+            <ul className='list-disc list-inside mt-2'>
+              {reasons.map((r, i) => <li key={i}>{r}</li>)}
+            </ul>
           </TooltipContent>
         </Tooltip>
       }

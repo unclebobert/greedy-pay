@@ -20,8 +20,14 @@ import { cn } from '@/lib/utils'
 export function NewGroupButton({ className }: React.ComponentProps<'svg'>) {
   const [name, setName] = useState('New Group')
   const [desc, setDesc] = useState('')
+
+  function reset() {
+    setName('New Group')
+    setDesc('')
+  }
+
   return (
-    <Dialog>
+    <Dialog onOpenChange={open => { if(open) reset() }}>
       <DialogTrigger asChild>
         <Plus className={cn(className, 'hover:text-muted-foreground cursor-pointer my-1')} />
       </DialogTrigger>

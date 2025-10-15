@@ -44,7 +44,7 @@ export function OweesList({ group, owees, setOwees }: {
       <TableBody>
         {
           Object.entries(owees).sort().map(([name, amount]) => (
-            <TableRow key={`owee_${name}`}>
+            <TableRow key={name}>
               <TableCell>
                 <Select value={name}
                   onValueChange={newName => swapOwee(name, newName)}
@@ -55,7 +55,7 @@ export function OweesList({ group, owees, setOwees }: {
                   <SelectContent>
                     {group.members
                       .map(member => (
-                        <SelectItem key={`swap_${member}`} value={member}
+                        <SelectItem key={name + member} value={member}
                           className='cursor-pointer'
                         >
                           {member}
@@ -83,7 +83,7 @@ export function OweesList({ group, owees, setOwees }: {
             </TableRow>
           ))
         }
-        <TableRow key='addowee'>
+        <TableRow>
           <TableCell colSpan={2}>
             <Select value={newOwee}
               onValueChange={owee => addNewOwee(owee)}

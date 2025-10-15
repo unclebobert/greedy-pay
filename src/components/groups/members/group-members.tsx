@@ -13,7 +13,6 @@ import { DeleteMemberButton } from './delete-member-btn';
 
 export function GroupMembers({ group }: { group: Group }) {
   const members = group.members
-  console.log(members)
   const transactions = group.minimisedTransactions()
   return (
     <>

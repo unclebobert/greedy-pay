@@ -39,25 +39,25 @@ export function OwersList({ group, owers, setOwers, remainingToSplit }: {
           />
         </div>
       }
-      {splitSomeEqual && group.members.map(m => (
-        <div key={m + 'cb'} className='flex items-center gap-3 ml-4'>
-          <Checkbox checked={owers.includes(m)}
+      {splitSomeEqual && group.members.map(member => (
+        <div key={member} className='flex items-center gap-3 ml-4'>
+          <Checkbox checked={owers.includes(member)}
             onClick={() => {
-              if (owers.includes(m)) {
-                setOwers(owers.filter(o => o !== m))
+              if (owers.includes(member)) {
+                setOwers(owers.filter(o => o !== member))
               } else {
-                setOwers([...owers, m])
+                setOwers([...owers, member])
               }
             }}
           />
-          <Label>{m}</Label>
+          <Label>{member}</Label>
         </div>
       ))}
       {splitManual &&
         <Table>
           <TableBody>
             {group.members.map(member => (
-              <TableRow key={`ower_${member}`}>
+              <TableRow key={member}>
                 <TableCell>{member}</TableCell>
                 <TableCell>
                   <div className='flex gap-2 items-center'>
